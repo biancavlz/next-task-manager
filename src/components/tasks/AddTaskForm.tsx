@@ -1,27 +1,26 @@
 "use client";
 
-import { useState, type SubmitEvent } from "react";
+import { useActionState } from "react";
+import { createTask, type CreateTaskState } from "./actions";
+
+const initialState: CreateTaskState = {
+  success: false,
+  errors: {},
+};
 
 function AddTaskForm() {
-  const [title, setTitle] = useState("");
-
-  function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    console.log(title);
-
-    setTitle("");
-  }
+  const [state, formAction, pending] = useActionState(createTask, initialState);
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form action={formAction}>
       <label htmlFor="title">New task</label>
-      <input
-        id="title"
-        value={title}
-        placeholder="Add a task"
-        onChange={(e) => setTitle(e.target.value)}
-      ></input>
+      <input id="title" name="title" type="text" />
+
+      {state.errors?.title && <p>{state.errors.title[0]}</p>}
+
+      <button type="submit" disabled={pending}>
+        Add Task
+      </button>
     </form>
   );
 }
