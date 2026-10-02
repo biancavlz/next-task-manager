@@ -1,4 +1,5 @@
 import { Task } from "@/types/task";
+import TaskItem from "./TaskItem";
 
 type TaskListProps = {
   tasks: Task[];
@@ -8,7 +9,7 @@ function TaskList({ tasks }: TaskListProps) {
   return (
     <ul>
       {tasks.map((task) => (
-        <li key={task.id}>{task.title}</li>
+        <TaskItem key={task.id} task={task} />
       ))}
     </ul>
   );
