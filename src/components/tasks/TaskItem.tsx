@@ -1,4 +1,5 @@
 import { Task } from "@/types/task";
+import TaskToggle from "./TaskToggle";
 
 type TaskProps = {
   task: Task;
@@ -7,7 +8,7 @@ type TaskProps = {
 function TaskItem({ task }: TaskProps) {
   return (
     <li>
-      <span>{task.completed ? "✅" : "❌"}</span>
+      <TaskToggle completed={task.completed} />
       <span>{task.title}</span>
     </li>
   );
