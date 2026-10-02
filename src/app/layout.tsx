@@ -14,7 +14,8 @@ function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      {/* Browser extensions (e.g. ColorZilla) add attributes to <body> before hydration */}
+      <body suppressHydrationWarning>
         <Header />
         {children}
       </body>

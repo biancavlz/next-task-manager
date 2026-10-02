@@ -1,19 +1,9 @@
+import { db } from "@/lib/db";
 import type { Task } from "@/types/task";
 
-export const tasks: Task[] = [
-  {
-    id: "1",
-    title: "Learn Next.js",
-    completed: false,
-  },
-  {
-    id: "2",
-    title: "Learn TypeScript",
-    completed: true,
-  },
-  {
-    id: "3",
-    title: "Learn Prisma",
-    completed: false,
-  },
-];
+export async function getTasks(): Promise<Task[]> {
+  return db.task.findMany({
+    select: { id: true, title: true, completed: true },
+    orderBy: { createdAt: "asc" },
+  });
+}
