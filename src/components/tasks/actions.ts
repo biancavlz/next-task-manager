@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+import { db } from "@/lib/db";
 import { createTaskSchema } from "@/lib/validation/task";
 import z from "zod";
 
@@ -23,7 +25,11 @@ export async function createTask(
     };
   }
 
-  console.log("Creating task", result.data.title);
+  await db.task.create({
+    data: { title: result.data.title },
+  });
+
+  revalidatePath("/tasks");
 
   return {
     success: true,
