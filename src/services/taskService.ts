@@ -15,3 +15,24 @@ export async function createTask(title: string) {
     },
   });
 }
+
+export async function toggleTask(id: string) {
+  const task = await db.task.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!task) {
+    throw new Error("Task not found");
+  }
+
+  return db.task.update({
+    where: {
+      id,
+    },
+    data: {
+      completed: !task.completed,
+    },
+  });
+}

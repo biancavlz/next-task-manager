@@ -8,4 +8,8 @@ export const createTaskSchema = z.object({
     .max(200, "Task title is too long"),
 });
 
+export const taskIdSchema = z.object({
+  id: z.string().min(1, "Task ID is required"),
+});
+
 export type CreateTaskInput = z.infer<typeof createTaskSchema>;
