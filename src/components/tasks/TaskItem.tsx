@@ -1,14 +1,14 @@
 import { Task } from "@/types/task";
-import TaskToggle from "./TaskToggle";
+import { TaskToggle } from "./TaskToggle";
 
-type TaskProps = {
+type TaskItemProps = {
   task: Task;
 };
 
-function TaskItem({ task }: TaskProps) {
+function TaskItem({ task }: TaskItemProps) {
   return (
     <li>
-      <TaskToggle completed={task.completed} />
+      <TaskToggle id={task.id} completed={task.completed} />
       <span>{task.title}</span>
     </li>
   );

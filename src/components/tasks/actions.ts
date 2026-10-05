@@ -1,8 +1,11 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { createTask as createTaskService } from "@/services/taskService";
-import { createTaskSchema } from "@/lib/validation/task";
+import {
+  createTask as createTaskService,
+  toggleTask as toggleTaskService,
+} from "@/services/taskService";
+import { createTaskSchema, taskIdSchema } from "@/lib/validation/task";
 import z from "zod";
 
 export type CreateTaskState = {
@@ -34,4 +37,16 @@ export async function createTask(
     success: true,
     message: "Task created successfully.",
   };
+}
+
+export async function toggleTask(id: string) {
+  const result = taskIdSchema.safeParse({ id });
+
+  if (!result.success) {
+    throw new Error("Invalid task ID");
+  }
+
+  await toggleTaskService(result.data.id);
+
+  revalidatePath("/tasks");
 }
