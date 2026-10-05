@@ -7,3 +7,11 @@ export async function getTasks(): Promise<Task[]> {
     orderBy: { createdAt: "asc" },
   });
 }
+
+export async function createTask(title: string) {
+  return db.task.create({
+    data: {
+      title,
+    },
+  });
+}

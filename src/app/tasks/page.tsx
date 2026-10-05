@@ -1,7 +1,7 @@
 import { connection } from "next/server";
 import AddTaskForm from "@/components/tasks/AddTaskForm";
 import TaskList from "@/components/tasks/TaskList";
-import { getTasks } from "@/lib/tasks";
+import { getTasks } from "@/services/taskService";
 
 async function TaskPage() {
   await connection();

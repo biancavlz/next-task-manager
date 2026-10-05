@@ -1,12 +1,13 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { db } from "@/lib/db";
+import { createTask as createTaskService } from "@/services/taskService";
 import { createTaskSchema } from "@/lib/validation/task";
 import z from "zod";
 
 export type CreateTaskState = {
   success: boolean;
+  message?: string;
   errors?: { title?: string[] };
 };
 
@@ -25,13 +26,12 @@ export async function createTask(
     };
   }
 
-  await db.task.create({
-    data: { title: result.data.title },
-  });
+  await createTaskService(result.data.title);
 
   revalidatePath("/tasks");
 
   return {
     success: true,
+    message: "Task created successfully.",
   };
 }
