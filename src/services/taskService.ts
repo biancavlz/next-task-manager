@@ -16,6 +16,24 @@ export async function createTask(title: string) {
   });
 }
 
+export async function deleteTask(id: string) {
+  const task = await db.task.findUnique({
+    where: {
+      id,
+    },
+  });
+
+  if (!task) {
+    throw new Error("Task not found");
+  }
+
+  await db.task.delete({
+    where: {
+      id,
+    },
+  });
+}
+
 export async function toggleTask(id: string) {
   const task = await db.task.findUnique({
     where: {

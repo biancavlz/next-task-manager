@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import {
   createTask as createTaskService,
+  deleteTask as deleteTaskService,
   toggleTask as toggleTaskService,
 } from "@/services/taskService";
 import { createTaskSchema, taskIdSchema } from "@/lib/validation/task";
@@ -37,6 +38,18 @@ export async function createTask(
     success: true,
     message: "Task created successfully.",
   };
+}
+
+export async function deleteTask(id: string) {
+  const result = taskIdSchema.safeParse({ id });
+
+  if (!result.success) {
+    throw new Error("Invalid task ID");
+  }
+
+  await deleteTaskService(result.data.id);
+
+  revalidatePath("/tasks");
 }
 
 export async function toggleTask(id: string) {
